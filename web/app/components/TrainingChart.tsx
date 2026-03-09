@@ -36,7 +36,7 @@ const trainingData = [
 
 const tooltipStyle = {
   backgroundColor: "#0f172a",
-  border: "1px solid rgba(99,102,241,0.4)",
+  border: "1px solid rgba(59,130,246,0.4)",
   borderRadius: "0.5rem",
   color: "#e2e8f0",
 };
@@ -67,7 +67,7 @@ export function AccuracyChart() {
           type="monotone"
           dataKey="trainAcc"
           name="Train Accuracy"
-          stroke="#60a5fa"
+          stroke="#3B82F6"
           strokeWidth={2}
           dot={false}
           activeDot={{ r: 5 }}
@@ -76,7 +76,7 @@ export function AccuracyChart() {
           type="monotone"
           dataKey="valAcc"
           name="Val Accuracy"
-          stroke="#34d399"
+          stroke="#93C5FD"
           strokeWidth={2}
           dot={false}
           activeDot={{ r: 5 }}
@@ -111,7 +111,7 @@ export function LossChart() {
           type="monotone"
           dataKey="trainLoss"
           name="Train Loss"
-          stroke="#f472b6"
+          stroke="#3B82F6"
           strokeWidth={2}
           dot={false}
           activeDot={{ r: 5 }}
@@ -120,7 +120,7 @@ export function LossChart() {
           type="monotone"
           dataKey="valLoss"
           name="Val Loss"
-          stroke="#fb923c"
+          stroke="#93C5FD"
           strokeWidth={2}
           dot={false}
           activeDot={{ r: 5 }}

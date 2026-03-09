@@ -1,95 +1,115 @@
 import { AccuracyChart, LossChart } from "./components/TrainingChart";
+import SpaceAnimation from "./components/SpaceAnimation";
 
 export default function Home() {
   return (
     <main className="min-h-screen" style={{ background: "#05080f", color: "#e2e8f0" }}>
       {/* ── Hero ─────────────────────────────────────────── */}
       <section
-        className="relative flex flex-col items-center justify-center text-center px-6 py-28 overflow-hidden star-bg"
+        className="relative flex flex-col items-center justify-center text-center px-6 py-28 overflow-hidden"
         style={{ minHeight: "60vh" }}
       >
+        {/* Animated canvas background */}
+        <SpaceAnimation />
+
+        {/* Fade to page background at bottom */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-x-0 bottom-0 pointer-events-none"
           style={{
-            background:
-              "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(59,130,246,0.12) 0%, transparent 70%)",
+            height: "40%",
+            background: "linear-gradient(to bottom, transparent 0%, #05080f 100%)",
+            zIndex: 1,
           }}
         />
-        <p className="text-sm font-semibold tracking-widest mb-4" style={{ color: "#60a5fa" }}>
-          MACHINE LEARNING · ASTROPHYSICS
-        </p>
-        <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-          <span
+
+        {/* Hero content */}
+        <div className="relative z-10 flex flex-col items-center w-full max-w-3xl">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="transit-pulse-dot" />
+            <p className="text-sm font-semibold tracking-widest" style={{ color: "#3B82F6" }}>
+              CURRENTLY OBSERVING TRANSIT · KEPLER-442 SYSTEM
+            </p>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+            <span style={{ color: "#F1F5F9" }}>
+              Exoplanet Detector
+            </span>
+          </h1>
+
+          <div
+            className="rounded-2xl px-6 py-5 mb-10 max-w-2xl w-full"
             style={{
-              background: "linear-gradient(135deg, #60a5fa, #a78bfa, #34d399)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              background: "rgba(5,10,25,0.55)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              border: "1px solid rgba(59,130,246,0.15)",
             }}
           >
-            Exoplanet Detector
-          </span>
-        </h1>
-        <p className="max-w-2xl text-lg md:text-xl mb-10" style={{ color: "#94a3b8" }}>
-          A 1-D Convolutional Neural Network trained on NASA Kepler mission light curves
-          to classify stars as{" "}
-          <strong style={{ color: "#34d399" }}>exoplanet hosts</strong> or{" "}
-          <strong style={{ color: "#f472b6" }}>non-hosts</strong> with{" "}
-          <strong style={{ color: "#60a5fa" }}>99.47 % validation accuracy</strong>.
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl">
-          {[
-            { label: "Val Accuracy", value: "99.47 %", color: "#34d399" },
-            { label: "Val Loss",     value: "0.0173",  color: "#60a5fa" },
-            { label: "Epochs",       value: "20",       color: "#a78bfa" },
-            { label: "Architecture", value: "Conv1D",   color: "#fb923c" },
-          ].map((s) => (
-            <div
-              key={s.label}
-              className="rounded-xl p-4"
-              style={{
-                background: "rgba(15,23,42,0.85)",
-                border: "1px solid rgba(59,130,246,0.2)",
-              }}
-            >
-              <div className="text-2xl font-bold" style={{ color: s.color }}>
-                {s.value}
+            <p className="text-lg md:text-xl" style={{ color: "#94a3b8" }}>
+              A 1-D Convolutional Neural Network trained on NASA Kepler mission light curves
+              to classify stars as{" "}
+              <strong style={{ color: "#F1F5F9" }}>exoplanet hosts</strong> or{" "}
+              <strong style={{ color: "#F1F5F9" }}>non-hosts</strong> with{" "}
+              <strong style={{ color: "#3B82F6" }}>99.47 % validation accuracy</strong>.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+            {[
+              { label: "Val Accuracy", value: "99.47 %" },
+              { label: "Val Loss",     value: "0.0173"  },
+              { label: "Epochs",       value: "20"       },
+              { label: "Architecture", value: "Conv1D"   },
+            ].map((s) => (
+              <div
+                key={s.label}
+                className="rounded-xl p-4"
+                style={{
+                  background: "rgba(5,10,25,0.55)",
+                  backdropFilter: "blur(16px)",
+                  WebkitBackdropFilter: "blur(16px)",
+                  border: "1px solid rgba(59,130,246,0.2)",
+                }}
+              >
+                <div className="text-2xl font-bold" style={{ color: "#F1F5F9" }}>
+                  {s.value}
+                </div>
+                <div className="text-xs mt-1" style={{ color: "#64748b" }}>
+                  {s.label}
+                </div>
               </div>
-              <div className="text-xs mt-1" style={{ color: "#64748b" }}>
-                {s.label}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
       <div className="max-w-6xl mx-auto px-6 pb-20 space-y-16">
 
         {/* ── Dataset ──────────────────────────────────────── */}
-        <Section title="Dataset" accent="#60a5fa">
+        <Section title="Dataset">
           <p style={{ color: "#94a3b8" }} className="mb-6 text-base leading-relaxed">
             The dataset originates from the{" "}
             <strong style={{ color: "#e2e8f0" }}>NASA Kepler Space Observatory</strong>, which
             monitors stellar brightness over time to detect the tiny periodic dips caused by a
             planet transiting in front of its star. Each sample is a time-series of{" "}
-            <strong style={{ color: "#60a5fa" }}>3,197 flux measurements</strong>.
+            <strong style={{ color: "#3B82F6" }}>3,197 flux measurements</strong>.
           </p>
           <div className="grid md:grid-cols-2 gap-4">
             {[
               {
                 label: "Training set",
                 detail: "5,087 stars · 37 exoplanet hosts (0.73 %)",
-                color: "#60a5fa",
               },
               {
                 label: "Test set",
                 detail: "570 stars · 5 exoplanet hosts (0.88 %)",
-                color: "#34d399",
               },
             ].map((d) => (
               <Card key={d.label}>
                 <div
                   className="text-xs font-semibold uppercase tracking-widest mb-1"
-                  style={{ color: d.color }}
+                  style={{ color: "#3B82F6" }}
                 >
                   {d.label}
                 </div>
@@ -97,7 +117,7 @@ export default function Home() {
               </Card>
             ))}
           </div>
-          <InfoBox color="#fb923c" className="mt-4">
+          <InfoBox className="mt-4">
             The dataset is severely <strong>class-imbalanced</strong>. Only ~0.7 % of stars host
             confirmed exoplanets, which motivated the use of{" "}
             <strong>SMOTE oversampling</strong> during preprocessing.
@@ -105,7 +125,7 @@ export default function Home() {
         </Section>
 
         {/* ── Preprocessing Pipeline ───────────────────────── */}
-        <Section title="Preprocessing Pipeline" accent="#a78bfa">
+        <Section title="Preprocessing Pipeline">
           <p style={{ color: "#94a3b8" }} className="mb-8 text-base leading-relaxed">
             Five sequential transformations prepare the raw flux data for the CNN. Each step
             targets a specific data quality issue.
@@ -117,12 +137,12 @@ export default function Home() {
                 className="flex items-start gap-4 rounded-xl p-4"
                 style={{
                   background: "rgba(15,23,42,0.85)",
-                  border: "1px solid rgba(139,92,246,0.25)",
+                  border: "1px solid rgba(59,130,246,0.15)",
                 }}
               >
                 <div
                   className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
-                  style={{ background: "rgba(139,92,246,0.2)", color: "#a78bfa" }}
+                  style={{ background: "rgba(59,130,246,0.15)", color: "#3B82F6" }}
                 >
                   {i + 1}
                 </div>
@@ -133,7 +153,7 @@ export default function Home() {
                   <div className="text-sm" style={{ color: "#94a3b8" }}>
                     {step.desc}
                   </div>
-                  <code className="text-xs mt-1 block" style={{ color: "#a78bfa" }}>
+                  <code className="text-xs mt-1 block" style={{ color: "#3B82F6" }}>
                     {step.code}
                   </code>
                 </div>
@@ -143,7 +163,7 @@ export default function Home() {
         </Section>
 
         {/* ── CNN Architecture ─────────────────────────────── */}
-        <Section title="CNN Architecture" accent="#34d399">
+        <Section title="CNN Architecture">
           <p style={{ color: "#94a3b8" }} className="mb-8 text-base leading-relaxed">
             A lightweight 1-D CNN extracts local temporal patterns from the light-curve signal.
             The two convolutional blocks progressively learn short-range and medium-range flux
@@ -176,9 +196,9 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-4 mt-6">
             {[
-              { label: "Loss",      value: "Binary Cross-Entropy", color: "#f472b6" },
-              { label: "Optimizer", value: "Adam",                 color: "#60a5fa" },
-              { label: "Metric",    value: "Accuracy",             color: "#34d399" },
+              { label: "Loss",      value: "Binary Cross-Entropy" },
+              { label: "Optimizer", value: "Adam"                 },
+              { label: "Metric",    value: "Accuracy"             },
             ].map((c) => (
               <Card key={c.label} className="text-center">
                 <div
@@ -187,7 +207,7 @@ export default function Home() {
                 >
                   {c.label}
                 </div>
-                <div className="font-semibold" style={{ color: c.color }}>
+                <div className="font-semibold" style={{ color: "#3B82F6" }}>
                   {c.value}
                 </div>
               </Card>
@@ -196,7 +216,7 @@ export default function Home() {
         </Section>
 
         {/* ── Training ─────────────────────────────────────── */}
-        <Section title="Training" accent="#fb923c">
+        <Section title="Training">
           <p style={{ color: "#94a3b8" }} className="mb-8 text-base leading-relaxed">
             The model was trained for{" "}
             <strong style={{ color: "#e2e8f0" }}>20 epochs</strong> with a{" "}
@@ -207,11 +227,11 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <SectionLabel color="#60a5fa">Accuracy per Epoch</SectionLabel>
+              <SectionLabel>Accuracy per Epoch</SectionLabel>
               <AccuracyChart />
             </div>
             <div>
-              <SectionLabel color="#f472b6">Loss per Epoch</SectionLabel>
+              <SectionLabel>Loss per Epoch</SectionLabel>
               <LossChart />
             </div>
           </div>
@@ -225,7 +245,7 @@ export default function Home() {
                 >
                   {h.label}
                 </div>
-                <div className="text-xl font-bold" style={{ color: h.color }}>
+                <div className="text-xl font-bold" style={{ color: "#3B82F6" }}>
                   {h.value}
                 </div>
                 <div className="text-xs mt-0.5" style={{ color: "#475569" }}>
@@ -237,7 +257,7 @@ export default function Home() {
         </Section>
 
         {/* ── Confusion Matrix ─────────────────────────────── */}
-        <Section title="Confusion Matrix (Test Set)" accent="#f472b6">
+        <Section title="Confusion Matrix (Test Set)">
           <p style={{ color: "#94a3b8" }} className="mb-8 text-base leading-relaxed">
             On the held-out test set of 570 stars, the model correctly identifies nearly all
             stars. High recall on the positive (exoplanet) class is critical — missing a true
@@ -250,13 +270,13 @@ export default function Home() {
                 <div />
                 <div
                   className="text-xs font-semibold py-1"
-                  style={{ color: "#60a5fa" }}
+                  style={{ color: "#3B82F6" }}
                 >
                   Predicted: No
                 </div>
                 <div
                   className="text-xs font-semibold py-1"
-                  style={{ color: "#34d399" }}
+                  style={{ color: "#3B82F6" }}
                 >
                   Predicted: Yes
                 </div>
@@ -268,8 +288,8 @@ export default function Home() {
                 >
                   Actual: No
                 </div>
-                <MatrixCell value={562} label="TN" color="#1e3a5f" textColor="#60a5fa" />
-                <MatrixCell value={3}   label="FP" color="#3b1f2b" textColor="#f472b6" />
+                <MatrixCell value={562} label="TN" color="#1E3A5F" textColor="#3B82F6" />
+                <MatrixCell value={3}   label="FP" color="#1C2535" textColor="#93C5FD" />
               </div>
               <div className="grid grid-cols-3 gap-1 text-center">
                 <div
@@ -278,16 +298,16 @@ export default function Home() {
                 >
                   Actual: Yes
                 </div>
-                <MatrixCell value={0}   label="FN" color="#3b1f2b" textColor="#fb923c" />
-                <MatrixCell value={5}   label="TP" color="#1a3b2e" textColor="#34d399" />
+                <MatrixCell value={0}   label="FN" color="#1C2535" textColor="#64748B" />
+                <MatrixCell value={5}   label="TP" color="#1E3A5F" textColor="#3B82F6" />
               </div>
 
               <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
                 {[
-                  { label: "Precision",    value: "62.5 %",  color: "#a78bfa", note: "TP / (TP + FP)" },
-                  { label: "Recall",       value: "100 %",   color: "#34d399", note: "TP / (TP + FN)" },
-                  { label: "F1 Score",     value: "76.9 %",  color: "#fb923c", note: "Harmonic mean"  },
-                  { label: "Overall Acc.", value: "99.47 %", color: "#60a5fa", note: "(TP+TN) / Total" },
+                  { label: "Precision",    value: "62.5 %",  note: "TP / (TP + FP)" },
+                  { label: "Recall",       value: "100 %",   note: "TP / (TP + FN)" },
+                  { label: "F1 Score",     value: "76.9 %",  note: "Harmonic mean"  },
+                  { label: "Overall Acc.", value: "99.47 %", note: "(TP+TN) / Total" },
                 ].map((m) => (
                   <Card key={m.label}>
                     <div
@@ -296,7 +316,7 @@ export default function Home() {
                     >
                       {m.label}
                     </div>
-                    <div className="text-xl font-bold my-0.5" style={{ color: m.color }}>
+                    <div className="text-xl font-bold my-0.5" style={{ color: "#3B82F6" }}>
                       {m.value}
                     </div>
                     <div className="text-xs" style={{ color: "#475569" }}>
@@ -308,7 +328,7 @@ export default function Home() {
             </div>
           </div>
 
-          <InfoBox color="#34d399" className="mt-8">
+          <InfoBox className="mt-8">
             <strong>Zero false negatives</strong> — every confirmed exoplanet host in the test
             set was correctly detected. The 3 false positives are an acceptable trade-off; these
             candidate stars would simply be reviewed by human astronomers as the next step.
@@ -316,7 +336,7 @@ export default function Home() {
         </Section>
 
         {/* ── Key Findings ─────────────────────────────────── */}
-        <Section title="Key Findings" accent="#a78bfa">
+        <Section title="Key Findings">
           <div className="grid md:grid-cols-2 gap-4">
             {findings.map((f) => (
               <div
@@ -324,7 +344,7 @@ export default function Home() {
                 className="flex gap-4 rounded-xl p-5"
                 style={{
                   background: "rgba(15,23,42,0.85)",
-                  border: "1px solid rgba(139,92,246,0.2)",
+                  border: "1px solid rgba(59,130,246,0.2)",
                 }}
               >
                 <div className="text-2xl">{f.icon}</div>
@@ -362,17 +382,15 @@ export default function Home() {
 
 function Section({
   title,
-  accent,
   children,
 }: {
   title: string;
-  accent: string;
   children: React.ReactNode;
 }) {
   return (
     <section>
       <div className="flex items-center gap-3 mb-6">
-        <div className="h-1 w-8 rounded-full" style={{ background: accent }} />
+        <div className="h-1 w-8 rounded-full" style={{ background: "#3B82F6" }} />
         <h2 className="text-2xl md:text-3xl font-bold" style={{ color: "#e2e8f0" }}>
           {title}
         </h2>
@@ -404,19 +422,17 @@ function Card({
 
 function InfoBox({
   children,
-  color,
   className = "",
 }: {
   children: React.ReactNode;
-  color: string;
   className?: string;
 }) {
   return (
     <div
       className={`rounded-xl p-4 text-sm ${className}`}
       style={{
-        background: `${color}18`,
-        border: `1px solid ${color}40`,
+        background: "rgba(59,130,246,0.09)",
+        border: "1px solid rgba(59,130,246,0.25)",
         color: "#cbd5e1",
       }}
     >
@@ -427,15 +443,13 @@ function InfoBox({
 
 function SectionLabel({
   children,
-  color,
 }: {
   children: React.ReactNode;
-  color: string;
 }) {
   return (
     <div
       className="text-xs font-semibold uppercase tracking-widest mb-3"
-      style={{ color }}
+      style={{ color: "#3B82F6" }}
     >
       {children}
     </div>
@@ -503,58 +517,58 @@ const archLayers = [
     name: "Input",
     detail: "Shape (3197, 1) — 3,197 flux time-steps per star",
     bg: "rgba(15,23,42,0.9)",
-    border: "rgba(100,116,139,0.4)",
-    color: "#94a3b8",
+    border: "rgba(100,116,139,0.35)",
+    color: "#94A3B8",
   },
   {
     name: "Conv1D  (8 filters, kernel=5, ReLU)",
     detail: "Detects short-range transit dip patterns across 5 time-steps",
     bg: "rgba(30,58,95,0.5)",
-    border: "rgba(96,165,250,0.5)",
-    color: "#60a5fa",
+    border: "rgba(59,130,246,0.45)",
+    color: "#3B82F6",
   },
   {
     name: "MaxPooling1D  (pool=4, stride=4)",
     detail: "Reduces sequence length by 4×, retaining dominant activations",
     bg: "rgba(15,23,42,0.7)",
-    border: "rgba(96,165,250,0.25)",
-    color: "#93c5fd",
+    border: "rgba(59,130,246,0.2)",
+    color: "#93C5FD",
   },
   {
     name: "Conv1D  (16 filters, kernel=3, ReLU, same padding)",
     detail: "Learns medium-range composite features with doubled filter count",
-    bg: "rgba(46,16,101,0.5)",
-    border: "rgba(167,139,250,0.5)",
-    color: "#a78bfa",
+    bg: "rgba(30,58,95,0.5)",
+    border: "rgba(59,130,246,0.45)",
+    color: "#3B82F6",
   },
   {
     name: "MaxPooling1D  (pool=4, stride=4)",
     detail: "Further reduces spatial resolution, building abstract representations",
     bg: "rgba(15,23,42,0.7)",
-    border: "rgba(167,139,250,0.25)",
-    color: "#c4b5fd",
+    border: "rgba(59,130,246,0.2)",
+    color: "#93C5FD",
   },
   {
     name: "Flatten",
     detail: "Converts 2-D feature maps to 1-D vector for the dense classifier",
     bg: "rgba(15,23,42,0.7)",
-    border: "rgba(100,116,139,0.3)",
-    color: "#64748b",
+    border: "rgba(100,116,139,0.25)",
+    color: "#64748B",
   },
   {
     name: "Dense (1 unit, Sigmoid)",
     detail: "Outputs P(exoplanet) — classified as positive when > 0.5",
-    bg: "rgba(20,83,45,0.5)",
-    border: "rgba(52,211,153,0.5)",
-    color: "#34d399",
+    bg: "rgba(30,58,95,0.5)",
+    border: "rgba(59,130,246,0.5)",
+    color: "#F1F5F9",
   },
 ];
 
 const epochHighlights = [
-  { label: "Peak Val Acc",    value: "99.47 %", color: "#34d399", sub: "Epochs 11, 17-20" },
-  { label: "Best Val Loss",   value: "0.0173",  color: "#60a5fa", sub: "Epoch 13"          },
-  { label: "Final Train Acc", value: "99.99 %", color: "#a78bfa", sub: "Epoch 20"          },
-  { label: "Batch Size",      value: "64",       color: "#fb923c", sub: "with shuffle"     },
+  { label: "Peak Val Acc",    value: "99.47 %", sub: "Epochs 11, 17-20" },
+  { label: "Best Val Loss",   value: "0.0173",  sub: "Epoch 13"          },
+  { label: "Final Train Acc", value: "99.99 %", sub: "Epoch 20"          },
+  { label: "Batch Size",      value: "64",       sub: "with shuffle"     },
 ];
 
 const findings = [
